@@ -3,6 +3,8 @@ import json
 import os
 
 def cleanup_data():
+    global most_recent_words
+
     three_months_ago = datetime.now() - timedelta(days=90)
 
     if os.path.exists('recent_words.json'):
@@ -20,8 +22,8 @@ def cleanup_data():
             return filtered_data
     return {}
 
-def keep_track_of_when_used(computer_choice):
-    most_recent_words[computer_choice] = datetime.now().strftime("%Y-%m-%d")
+def track_word(computer_choice):
+    most_recent_words["".join(computer_choice)] = datetime.now().strftime("%Y-%m-%d")
     with open('recent_words.json', 'w') as file:
         json.dump(most_recent_words, file, indent=4)
     return most_recent_words
